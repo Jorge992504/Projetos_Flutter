@@ -13,7 +13,6 @@ import 'package:homechat/src/core/service/register_service/register_service.dart
 import 'package:homechat/src/core/service/register_service/register_service_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 part 'application_provider.g.dart';
 
@@ -43,20 +42,10 @@ Future<UserModel> getMe(GetMeRef ref) async {
   };
 }
 
-@Riverpod(keepAlive: true)
-WebSocketChannel webSocketChannel(ProviderRef ref) {
-  final channel =
-      WebSocketChannel.connect(Uri.parse('ws://172.16.251.22:3001'));
-  ref.onDispose(() => channel.sink.close());
-  return channel;
-}
-
 //
 @Riverpod(keepAlive: true)
 RepositoryGeneral repositoryGeneral(RepositoryGeneralRef ref) =>
-    RepositoryGeneralImpl(
-        restClient: ref.watch(restClientProvider),
-        channel: ref.watch(webSocketChannelProvider));
+    RepositoryGeneralImpl(restClient: ref.watch(restClientProvider));
 
 @Riverpod(keepAlive: true)
 Future<List<UserModel>> getMeUsers(GetMeUsersRef ref) async {

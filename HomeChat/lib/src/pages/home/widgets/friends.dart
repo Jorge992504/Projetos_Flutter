@@ -21,8 +21,8 @@ class _FriendsState extends ConsumerState<Friends> {
   Widget build(BuildContext context) {
     final getRequest = ref.watch(requestVmProvider);
     final getFriend = ref.watch(friendVmProvider);
-    // ref.refresh(requestVmProvider);
-    // ref.refresh(friendVmProvider);
+    ref.refresh(requestVmProvider);
+    ref.refresh(friendVmProvider);
     ref.listen(requestVmProvider, (_, state) {
       switch (state) {
         // ignore: constant_pattern_never_matches_value_type

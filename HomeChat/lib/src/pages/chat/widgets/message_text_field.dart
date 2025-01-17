@@ -1,40 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:homechat/src/pages/chat/chat_vm.dart';
 
-class MessageTextField extends ConsumerStatefulWidget {
+class MessageTextField extends StatelessWidget {
+  final TextEditingController messageEC;
+  final VoidCallback onPressed;
   const MessageTextField({
     super.key,
+    required this.messageEC,
+    required this.onPressed,
   });
-
-  @override
-  ConsumerState<MessageTextField> createState() => _MessageTextFieldState();
-}
-
-class _MessageTextFieldState extends ConsumerState<MessageTextField> {
-  String message = '';
-  final messageEC = TextEditingController();
-
-  @override
-  void dispose() {
-    messageEC.dispose();
-    super.dispose();
-  }
-
-  void _sendMessage() async {
-    final messageText = messageEC.text.trim();
-
-    if (messageText.isNotEmpty) {
-      final chatVm = ref.read(chatVmProvider.notifier);
-
-      // Aqui você deve substituir pelos IDs corretos do remetente e do destinatário
-      const senderId = 1; // Exemplo: ID do usuário atual
-      const receiverId = 2; // Exemplo: ID do destinatário
-
-      // Limpa o campo de texto após o envio
-      messageEC.clear();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +23,10 @@ class _MessageTextFieldState extends ConsumerState<MessageTextField> {
             child: TextField(
               controller: messageEC,
               maxLines: 1,
-              onChanged: (message) {
-                message = message;
-              },
-              // onSubmitted: (_) => _sendMessage(),
             ),
           ),
           IconButton(
-            onPressed: _sendMessage,
+            onPressed: onPressed,
             icon: const Icon(Icons.send),
           ),
         ],
