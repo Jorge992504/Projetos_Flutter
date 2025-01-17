@@ -88,7 +88,24 @@ final getMeProvider = FutureProvider<UserModel>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetMeRef = FutureProviderRef<UserModel>;
-String _$repositoryGeneralHash() => r'3da1a16034213addd2efb02f39b3ce86fda214e6';
+String _$webSocketChannelHash() => r'0cff8c3a9355dc6babced5b1340143590bf66558';
+
+/// See also [webSocketChannel].
+@ProviderFor(webSocketChannel)
+final webSocketChannelProvider = Provider<WebSocketChannel>.internal(
+  webSocketChannel,
+  name: r'webSocketChannelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$webSocketChannelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef WebSocketChannelRef = ProviderRef<WebSocketChannel>;
+String _$repositoryGeneralHash() => r'00b6898d442ee71932d3174d0dde0ac05eac14a7';
 
 /// See also [repositoryGeneral].
 @ProviderFor(repositoryGeneral)
@@ -121,7 +138,7 @@ final getMeUsersProvider = FutureProvider<List<UserModel>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetMeUsersRef = FutureProviderRef<List<UserModel>>;
-String _$logoutHash() => r'368ef97396f21edeb3d0d88bee986a9637a2f28c';
+String _$logoutHash() => r'12388f796042c00ba720999f9878ad984304660b';
 
 /// See also [logout].
 @ProviderFor(logout)

@@ -47,6 +47,8 @@ dependencies:
   snackbar: ^1.0.2
   top_snackbar: ^0.0.6
   jwt_decode: ^0.3.1
+  
+  web_socket_channel: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +64,7 @@ dev_dependencies:
   riverpod_lint: ^2.6.3
   riverpod_generator: ^2.6.3
   build_runner: ^2.4.13
-
+ 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

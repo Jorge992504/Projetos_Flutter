@@ -1,16 +1,19 @@
 import 'package:homechat/src/core/client/res_client.dart';
 import 'package:homechat/src/core/fp/either.dart';
+
 import 'package:homechat/src/core/models/user_model.dart';
 import 'package:homechat/src/core/repositories/auth/auth_repository.dart';
 import 'package:homechat/src/core/repositories/auth/auth_repository_impl.dart';
 import 'package:homechat/src/core/repositories/general/repository_general.dart';
 import 'package:homechat/src/core/repositories/general/repository_general_impl.dart';
+
 import 'package:homechat/src/core/service/login/login_service.dart';
 import 'package:homechat/src/core/service/login/login_service_impl.dart';
 import 'package:homechat/src/core/service/register_service/register_service.dart';
 import 'package:homechat/src/core/service/register_service/register_service_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 part 'application_provider.g.dart';
 
@@ -40,10 +43,20 @@ Future<UserModel> getMe(GetMeRef ref) async {
   };
 }
 
+@Riverpod(keepAlive: true)
+WebSocketChannel webSocketChannel(ProviderRef ref) {
+  final channel =
+      WebSocketChannel.connect(Uri.parse('ws://172.16.251.22:3001'));
+  ref.onDispose(() => channel.sink.close());
+  return channel;
+}
+
 //
 @Riverpod(keepAlive: true)
 RepositoryGeneral repositoryGeneral(RepositoryGeneralRef ref) =>
-    RepositoryGeneralImpl(restClient: ref.watch(restClientProvider));
+    RepositoryGeneralImpl(
+        restClient: ref.watch(restClientProvider),
+        channel: ref.watch(webSocketChannelProvider));
 
 @Riverpod(keepAlive: true)
 Future<List<UserModel>> getMeUsers(GetMeUsersRef ref) async {
@@ -60,7 +73,7 @@ Future<List<UserModel>> getMeUsers(GetMeUsersRef ref) async {
 Future<void> logout(LogoutRef ref) async {
   final sp = await SharedPreferences.getInstance();
   sp.clear();
-
+  await sp.remove('token');
   ref.invalidate(getMeProvider);
   ref.invalidate(registerServiceProvider);
   ref.invalidate(repositoryGeneralProvider);

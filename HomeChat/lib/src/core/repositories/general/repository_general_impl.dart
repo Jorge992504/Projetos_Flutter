@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -6,13 +7,17 @@ import 'package:homechat/src/core/client/res_client.dart';
 import 'package:homechat/src/core/exceptions/repository_exception.dart';
 import 'package:homechat/src/core/fp/either.dart';
 import 'package:homechat/src/core/fp/nil.dart';
+import 'package:homechat/src/core/models/message_model.dart';
 import 'package:homechat/src/core/models/user_model.dart';
 import 'package:homechat/src/core/repositories/general/repository_general.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class RepositoryGeneralImpl implements RepositoryGeneral {
   final RestClient restClient;
+  final WebSocketChannel channel;
   RepositoryGeneralImpl({
     required this.restClient,
+    required this.channel,
   });
 
   @override
@@ -130,7 +135,7 @@ class RepositoryGeneralImpl implements RepositoryGeneral {
       ({int friendId}) data) async {
     try {
       await restClient.auth.delete('/friends', data: {
-        'request': data.friendId,
+        'friend_id': data.friendId,
       });
       return Success(nil);
     } on DioException catch (e, s) {

@@ -6,7 +6,7 @@ part of 'friend_vm.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$friendVmHash() => r'd3950d9cf8070c78ef3d796fcabd65dbb1c838a7';
+String _$friendVmHash() => r'faf696c3da04dd4062b90d46e48dd279257b7605';
 
 /// See also [FriendVm].
 @ProviderFor(FriendVm)

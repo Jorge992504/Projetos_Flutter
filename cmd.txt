@@ -1,5 +1,5 @@
 //criar project
-flutter create --project-name homechat --android-language java --platforms ios,android,windows,web --org jorgeabp99@gmail.com HomeChat
+flutter create --project-name coletor --android-language java --platforms ios,android,windows,web --org jorgeabp99@gmail.com Coletor
 
 //add plataforma
 flutter create --plataforms=web .
@@ -11,7 +11,7 @@ flutter
 json_rest_server run
 node server.js
 node --watch app.js => deixar o server rodando
-
+dart run build_runner watch -d
 
 reborn
 

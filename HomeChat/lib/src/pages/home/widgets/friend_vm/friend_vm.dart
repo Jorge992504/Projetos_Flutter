@@ -31,10 +31,10 @@ class FriendVm extends _$FriendVm {
     }
   }
 
-  Future<void> deletFriend(int request) async {
+  Future<void> deletFriend(int friendId) async {
     final repository = ref.read(repositoryGeneralProvider);
-    final dto = (request: request);
-    final result = await repository.deletRequest(dto);
+    final dto = (friendId: friendId);
+    final result = await repository.deletFriend(dto);
     switch (result) {
       case Success():
         state = FriendStateStatus.success as AsyncValue<FriendState>;

@@ -16,6 +16,10 @@ mixin class Messages {
         Overlay.of(context),
         CustomSnackBar.info(
           message: message,
+          icon: const Icon(
+            Icons.mark_email_read_rounded,
+            size: 50,
+          ),
         ));
   }
 
